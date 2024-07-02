@@ -9,54 +9,79 @@ const cloudinary = require("cloudinary");
 const ErrorHandler = require("../utils/ErrorHandler");
 
 // create product
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // 1 second
+
+async function uploadImageWithRetry(image, retries = 0) {
+    try {
+        const result = await cloudinary.v2.uploader.upload(image, {
+            folder: "products",
+            timeout: 60000, // Set a higher timeout if needed
+        });
+        return result;
+    } catch (error) {
+        if (retries < MAX_RETRIES) {
+            console.log(`Retrying upload (${retries + 1}/${MAX_RETRIES})...`);
+            await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+            return uploadImageWithRetry(image, retries + 1);
+        } else {
+            throw error;
+        }
+    }
+}
+
 router.post(
     "/create-product",
     catchAsyncErrors(async (req, res, next) => {
-        console.log("req.body", req.body);
+        console.log("Request body:", req.body);
         try {
             const shopId = req.body.shopId;
             const shop = await Shop.findById(shopId);
+
             if (!shop) {
                 return next(new ErrorHandler("Shop Id is invalid!", 400));
+            }
+
+            let images = [];
+            if (typeof req.body.images === "string") {
+                images.push(req.body.images);
             } else {
-                let images = [];
+                images = req.body.images;
+            }
 
-                if (typeof req.body.images === "string") {
-                    images.push(req.body.images);
-                } else {
-                    images = req.body.images;
-                }
-
-                const imagesLinks = [];
-
-                for (let i = 0; i < images.length; i++) {
-                    const result = await cloudinary.v2.uploader.upload(
-                        images[i],
-                        {
-                            folder: "products",
-                        }
-                    );
-
+            const imagesLinks = [];
+            for (let i = 0; i < images.length; i++) {
+                try {
+                    const result = await uploadImageWithRetry(images[i]);
                     imagesLinks.push({
                         public_id: result.public_id,
                         url: result.secure_url,
                     });
+                } catch (uploadError) {
+                    console.error("Error uploading image:", uploadError);
+                    return next(
+                        new ErrorHandler(
+                            "Failed to upload image to Cloudinary",
+                            500
+                        )
+                    );
                 }
-
-                const productData = req.body;
-                productData.images = imagesLinks;
-                productData.shop = shop;
-
-                const product = await Product.create(productData);
-
-                res.status(201).json({
-                    success: true,
-                    product,
-                });
             }
+
+            const productData = req.body;
+            productData.images = imagesLinks;
+            productData.shop = shop;
+
+            const product = await Product.create(productData);
+
+            res.status(201).json({
+                success: true,
+                product,
+            });
         } catch (error) {
-            console.log("ERROR FUCK YOU");
-            return next(new ErrorHandler("TOO large file", 400));
+            console.error("Error creating product:", error);
+            return next(new ErrorHandler("Internal Server Error", 500));
         }
     })
 );
