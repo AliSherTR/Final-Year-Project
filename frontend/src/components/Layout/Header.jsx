@@ -79,7 +79,10 @@ const Header = ({ activeHeading }) => {
                                 {searchData &&
                                     searchData.map((i, index) => {
                                         return (
-                                            <Link to={`/product/${i._id}`}>
+                                            <Link
+                                                to={`/product/${i._id}`}
+                                                target="blank"
+                                            >
                                                 <div className="w-full flex items-start-py-3">
                                                     <img
                                                         src={`${i.images[0]?.url}`}

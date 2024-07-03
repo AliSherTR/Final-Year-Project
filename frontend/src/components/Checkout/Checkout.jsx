@@ -135,7 +135,7 @@ const Checkout = () => {
                     <CartData
                         handleSubmit={handleSubmit}
                         totalPrice={totalPrice}
-                        shipping={shipping}
+                        shipping={2000}
                         subTotalPrice={subTotalPrice}
                         couponCode={couponCode}
                         setCouponCode={setCouponCode}

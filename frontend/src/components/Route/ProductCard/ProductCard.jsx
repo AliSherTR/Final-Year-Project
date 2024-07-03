@@ -68,6 +68,7 @@ const ProductCard = ({ data, isEvent }) => {
                             ? `/product/${data._id}?isEvent=true`
                             : `/product/${data._id}`
                     }`}
+                    target="blank"
                 >
                     <img
                         src={`${data.images && data.images[0]?.url}`}
