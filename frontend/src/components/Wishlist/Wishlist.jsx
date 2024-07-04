@@ -29,7 +29,7 @@ const Wishlist = ({ setOpenWishlist }) => {
                         <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
                             <RxCross1
                                 size={25}
-                                className="cursor-pointer"
+                                className="text-3xl text-red-500"
                                 onClick={() => setOpenWishlist(false)}
                             />
                         </div>
@@ -41,7 +41,7 @@ const Wishlist = ({ setOpenWishlist }) => {
                             <div className="flex w-full justify-end pt-5 pr-5">
                                 <RxCross1
                                     size={25}
-                                    className="cursor-pointer"
+                                    className="text-3xl text-red-500"
                                     onClick={() => setOpenWishlist(false)}
                                 />
                             </div>
@@ -84,7 +84,7 @@ const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
         <div className="border-b p-4">
             <div className="w-full 800px:flex items-center">
                 <RxCross1
-                    className="cursor-pointer 800px:mb-['unset'] 800px:ml-['unset'] mb-2 ml-2"
+                    className="cursor-pointer 800px:mb-['unset'] 800px:ml-['unset'] mb-2 ml-2 text-3xl text-red-500"
                     onClick={() => removeFromWishlistHandler(data)}
                 />
                 <img
@@ -94,7 +94,7 @@ const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
                 />
 
                 <div className="pl-[5px]">
-                    <h1>{data.name}</h1>
+                    <h1 className=" text-black">{data.name}</h1>
                     <h4 className="font-[600] pt-3 800px:pt-[3px] text-[17px] text-[#d02222] font-Roboto">
                         Rs{totalPrice}
                     </h4>
@@ -102,7 +102,7 @@ const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
                 <div>
                     <BsCartPlus
                         size={20}
-                        className="cursor-pointer"
+                        className="cursor-pointer text-3xl text-red-500"
                         tile="Add to cart"
                         onClick={() => addToCartHandler(data)}
                     />

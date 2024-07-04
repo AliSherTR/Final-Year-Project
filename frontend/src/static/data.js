@@ -5,8 +5,8 @@ export const navItems = [
         url: "/",
     },
     {
-        title: "Best Selling",
-        url: "/best-selling",
+        title: "Contact Us",
+        url: "/contact-us",
     },
     {
         title: "Products",
@@ -216,13 +216,6 @@ export const categoriesData = [
         subTitle: "",
         image_Url:
             "https://static.vecteezy.com/system/resources/previews/011/996/555/original/3d-black-headphone-illustration-ecommerce-icon-png.png",
-    },
-    {
-        id: 5,
-        title: "Others",
-        subTitle: "",
-        image_Url:
-            "https://searchspring.com/wp-content/uploads/2022/10/Hero-Image-Platform-Others-2.png",
     },
 ];
 

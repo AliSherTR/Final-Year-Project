@@ -33,7 +33,8 @@ const Cart = ({ setOpenCart }) => {
                         <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
                             <RxCross1
                                 size={25}
-                                className="cursor-pointer"
+                                className="cursor-pointer text-3xl text-red-500"
+                                color="red"
                                 onClick={() => setOpenCart(false)}
                             />
                         </div>
@@ -45,7 +46,7 @@ const Cart = ({ setOpenCart }) => {
                             <div className="flex w-full justify-end pt-5 pr-5">
                                 <RxCross1
                                     size={25}
-                                    className="cursor-pointer"
+                                    className="cursor-pointer text-3xl text-red-500"
                                     onClick={() => setOpenCart(false)}
                                 />
                             </div>
@@ -148,7 +149,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
                     </h4>
                 </div>
                 <RxCross1
-                    className="cursor-pointer"
+                    className="cursor-pointer text-red-500 font-semibold text-2xl"
                     onClick={() => removeFromCartHandler(data)}
                 />
             </div>
