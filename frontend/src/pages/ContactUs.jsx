@@ -1,27 +1,28 @@
 import { useRef } from "react";
 import Footer from "../components/Layout/Footer";
+import emailjs from "@emailjs/browser";
 import Header from "../components/Layout/Header";
 import { toast } from "react-toastify";
 
 export default function Contactus() {
     const form = useRef();
 
-    // const sendEmail = (e) => {
-    //     e.preventDefault();
+    const sendEmail = (e) => {
+        e.preventDefault();
 
-    //     emailjs
-    //         .sendForm("service_sik7o5o", "template_hj64nmq", form.current, {
-    //             publicKey: "8RE-_NcXCSzufx5Q7",
-    //         })
-    //         .then(
-    //             () => {
-    //                 toast.success("Email Sent Successfully");
-    //             },
-    //             (error) => {
-    //                 console.log("FAILED...", error.text);
-    //             }
-    //         );
-    // };
+        emailjs
+            .sendForm("service_sik7o5o", "template_hj64nmq", form.current, {
+                publicKey: "8RE-_NcXCSzufx5Q7",
+            })
+            .then(
+                () => {
+                    toast.success("Email Sent Successfully");
+                },
+                (error) => {
+                    console.log("FAILED...", error.text);
+                }
+            );
+    };
     return (
         <>
             <Header />
@@ -40,7 +41,7 @@ export default function Contactus() {
                     <form
                         className="flex flex-col w-full text-base"
                         ref={form}
-                        // onSubmit={sendEmail}
+                        onSubmit={sendEmail}
                     >
                         <label className=" text-1xl font-bold mb-5">
                             Name:
